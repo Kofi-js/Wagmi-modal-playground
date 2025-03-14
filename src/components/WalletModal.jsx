@@ -30,10 +30,10 @@ export function WalletModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center modal-backdrop bg-black/75 backdrop-blur-sm transition-opacity duration-300">
-      <div className="bg-gray-900 rounded-2xl shadow-2xl w-96 max-w-full border border-gray-800 transform transition-all duration-300">
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-5 modal-backdrop bg-black/75 backdrop-blur-sm transition-opacity duration-300">
+      <div className="bg-blue-950 rounded-2xl shadow-2xl w-[500px] max-w-full border border-gray-800 transform transition-all duration-300">
         {/* Modal Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-800">
+        <div className="flex items-center justify-between p-6">
           <h3 className="text-xl font-semibold text-white">
             {isConnected ? 'Your Wallet' : 'Connect Wallet'}
           </h3>
@@ -50,7 +50,7 @@ export function WalletModal({ isOpen, onClose }) {
           {isConnected ? (
             <div className="space-y-5">
               {/* Connected Wallet Info */}
-              <div className="p-4 bg-gray-800 rounded-xl border border-gray-700">
+              <div className="p-4 bg-transparent rounded-xl border border-gray-500">
                 <div className="text-sm text-gray-400 mb-1">Connected Address</div>
                 <div className="font-mono text-white text-lg">
                   {formatAddress(address)}
@@ -60,17 +60,17 @@ export function WalletModal({ isOpen, onClose }) {
               {/* Current Network */}
               <div className="relative">
                 <div 
-                  className="p-4 bg-gray-800 rounded-xl border border-gray-700 flex justify-between items-center cursor-pointer hover:bg-gray-750 transition-colors duration-200"
+                  className="p-4 bg-transparent rounded-xl border border-gray-500 flex justify-between items-center cursor-pointer hover:bg-gray-750 transition-colors duration-200"
                   onClick={() => setIsNetworkMenuOpen(!isNetworkMenuOpen)}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`w-3 h-3 rounded-full ${currentChain ? 'bg-green-500' : 'bg-red-500'} shadow-lg`}></div>
+                    <div className={`w-3 h-3 rounded-full ${currentChain ? 'bg-green-700' : 'bg-red-700'} shadow-lg`}></div>
                     <div>
                       <div className="text-sm text-gray-400">Network</div>
                       <div className="text-white">{currentChain ? currentChain.name : "Not Connected"}</div>
                     </div>
                   </div>
-                  <span className={`transform transition-transform duration-200 ${isNetworkMenuOpen ? 'rotate-180' : ''}`}>▼</span>
+                  <span className={`transform transition-transform text-white font-thin duration-200 ${isNetworkMenuOpen ? 'rotate-180' : ''}`}>v</span>
                 </div>
 
                 {/* Network Dropdown */}
@@ -98,7 +98,7 @@ export function WalletModal({ isOpen, onClose }) {
               {/* Disconnect Button */}
               <button
                 onClick={() => disconnect()}
-                className="w-full bg-red-600 text-white p-4 rounded-xl font-medium hover:bg-red-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                className="w-full bg-red-900 text-white p-4 rounded-xl font-medium hover:bg-red-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-900"
               >
                 Disconnect Wallet
               </button>
@@ -119,9 +119,13 @@ export function WalletModal({ isOpen, onClose }) {
                   className="w-full p-4 rounded-xl flex items-center justify-between border border-gray-700 bg-gray-800 hover:bg-gray-750 transition-colors duration-200 text-white font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
                 >
                   <span>{connector.name}</span>
-                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                  {typeof connector.icon === "string"? (
+                    <img 
+                    className="w-[30px] rounded-md"
+                    src={connector.icon}
+                    alt={`${connector.name} icon`}
+                  />
+                  ) : ""}
                 </button>
               ))}
             </div>
