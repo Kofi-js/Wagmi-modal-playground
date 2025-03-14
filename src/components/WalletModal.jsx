@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useAccount, useConnect, useDisconnect, useEnsName, useSwitchChain } from 'wagmi';
+import { useAccount, useConnect, useDisconnect, useSwitchChain } from 'wagmi';
 
 export function WalletModal({ isOpen, onClose }) {
   const { address, isConnected, chain: currentChain } = useAccount();
   const { connectors, connect, status, error } = useConnect();
   const { disconnect } = useDisconnect();
-  const { data: ensName } = useEnsName({ address });
+ 
   const { chains, switchChain } = useSwitchChain();
 
   const [isNetworkMenuOpen, setIsNetworkMenuOpen] = useState(false);
