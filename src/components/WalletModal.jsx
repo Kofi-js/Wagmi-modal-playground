@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useAccount, useConnect, useDisconnect, useEnsName, useEnsAvatar, useChains, useSwitchChain } from 'wagmi';
+import { useAccount, useConnect, useDisconnect, useEnsName, useEnsAvatar, useSwitchChain } from 'wagmi';
 
 export function WalletModal({ isOpen, onClose }) {
-  const { address, isConnected } = useAccount();
+  const { address, isConnected, chain: currentChain } = useAccount();
   const { connectors, connect, status, error } = useConnect();
   const { disconnect } = useDisconnect();
   const { data: ensName } = useEnsName({ address });
   const { data: ensAvatar } = useEnsAvatar({ name: ensName });
-  const { chain } = useChains();
   const { chains, switchChain } = useSwitchChain();
 
-  console.log("Available connectors:", connectors);
   const [isNetworkMenuOpen, setIsNetworkMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -32,8 +30,6 @@ export function WalletModal({ isOpen, onClose }) {
     if (!addr) return "";
     return `${addr.substring(0, 6)}...${addr.substring(addr.length - 4)}`;
   };
-
-
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center modal-backdrop bg-black bg-opacity-50">
@@ -68,26 +64,26 @@ export function WalletModal({ isOpen, onClose }) {
                 <div className="p-3 bg-gray-100 rounded-md flex justify-between items-center cursor-pointer"
                   onClick={() => setIsNetworkMenuOpen(!isNetworkMenuOpen)}>
                   <div className="flex items-center gap-2">
-                    <div className={`w-3 h-3 rounded-full ${chain ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                    <span>{chain?.name || "Not Connected"}</span>
+                    <div className={`w-3 h-3 rounded-full ${currentChain ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                    <span>{currentChain ? currentChain.name : "Not Connected"}</span>
                   </div>
                   <span>▼</span>
                 </div>
 
                 {/* Network Dropdown */}
-                {isNetworkMenuOpen && (
+                {isNetworkMenuOpen && chains && chains.length > 0 && (
                   <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10">
                     {chains.map((c) => (
                       <div
                         key={c.id}
                         className="p-2 hover:bg-gray-100 cursor-pointer flex items-center justify-between"
                         onClick={() => {
-                          switchChain?.(c.id);
+                          switchChain({ chainId: c.id });
                           setIsNetworkMenuOpen(false);
                         }}
                       >
                         <span>{c.name}</span>
-                        {chain?.id === c.id && <span>✓</span>}
+                        {currentChain?.id === c.id && <span>✓</span>}
                       </div>
                     ))}
                   </div>
@@ -115,7 +111,6 @@ export function WalletModal({ isOpen, onClose }) {
                 <button
                   key={connector.uid}
                   onClick={() => connect({ connector })}
-                  // disabled={!connector.ready}
                   className={`w-full p-3 rounded-md flex items-center justify-between border`}
                 >
                   <span>{connector.name}</span>
