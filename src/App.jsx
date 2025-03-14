@@ -16,7 +16,9 @@ function ConnectWallet() {
   };
 
   return (
-    <div className="p-4">
+    <div>
+      <div className="flex justify-between items-center p-4">
+        <h1 className='text-2xl font-semibold'>Wagmi Connector</h1>
       <button 
         onClick={() => setIsModalOpen(true)}
         className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
@@ -26,6 +28,8 @@ function ConnectWallet() {
       
       <WalletModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
+    </div>
+
   );
 }
 

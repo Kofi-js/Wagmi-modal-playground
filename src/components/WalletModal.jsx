@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useAccount, useConnect, useDisconnect, useEnsName, useEnsAvatar, useSwitchChain } from 'wagmi';
+import { useAccount, useConnect, useDisconnect, useEnsName, useSwitchChain } from 'wagmi';
 
 export function WalletModal({ isOpen, onClose }) {
   const { address, isConnected, chain: currentChain } = useAccount();
   const { connectors, connect, status, error } = useConnect();
   const { disconnect } = useDisconnect();
   const { data: ensName } = useEnsName({ address });
-  const { data: ensAvatar } = useEnsAvatar({ name: ensName });
   const { chains, switchChain } = useSwitchChain();
 
   const [isNetworkMenuOpen, setIsNetworkMenuOpen] = useState(false);
@@ -48,15 +47,9 @@ export function WalletModal({ isOpen, onClose }) {
             <div className="space-y-4">
               {/* Connected Wallet Info */}
               <div className="flex items-center space-x-3">
-                {ensAvatar && (
-                  <img alt="ENS Avatar" src={ensAvatar} className="w-10 h-10 rounded-full" />
-                )}
-                <div>
                   <div className="font-medium text-white">
-                    {ensName ? ensName : formatAddress(address)}
+                    {formatAddress(address)}
                   </div>
-                  {ensName && <div className="text-sm text-gray-500">{formatAddress(address)}</div>}
-                </div>
               </div>
 
               {/* Current Network */}
