@@ -114,7 +114,6 @@ export function WalletModal({ isOpen, onClose }) {
                   className={`w-full p-3 rounded-md flex items-center justify-between border`}
                 >
                   <span>{connector.name}</span>
-                  {!connector.ready && <span className="text-xs">(not installed)</span>}
                 </button>
               ))}
             </div>
