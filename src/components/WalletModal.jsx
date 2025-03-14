@@ -117,9 +117,8 @@ export function WalletModal({ isOpen, onClose }) {
                 <button
                   key={connector.uid}
                   onClick={() => connect({ connector })}
-                  disabled={!connector.ready}
-                  className={`w-full p-3 rounded-md flex items-center justify-between border
-                    ${connector.ready ? 'hover:bg-gray-50' : 'opacity-50 cursor-not-allowed'}`}
+                  // disabled={!connector.ready}
+                  className={`w-full p-3 rounded-md flex items-center justify-between border`}
                 >
                   <span>{connector.name}</span>
                   {!connector.ready && <span className="text-xs">(not installed)</span>}
