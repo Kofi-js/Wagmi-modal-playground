@@ -116,9 +116,8 @@ export function WalletModal({ isOpen, onClose }) {
                 <button
                   key={connector.uid}
                   onClick={() => connect({ connector })}
-                  className="w-full p-4 rounded-xl flex items-center justify-between border border-gray-700 bg-gray-800 hover:bg-gray-750 transition-colors duration-200 text-white font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                  className="w-full p-4 rounded-xl flex items-center gap-3 border border-gray-700 bg-gray-800 hover:bg-gray-750 transition-colors duration-200 text-white font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
                 >
-                  <span>{connector.name}</span>
                   {typeof connector.icon === "string"? (
                     <img 
                     className="w-[30px] rounded-md"
@@ -126,6 +125,7 @@ export function WalletModal({ isOpen, onClose }) {
                     alt={`${connector.name} icon`}
                   />
                   ) : ""}
+                  <span>{connector.name}</span>
                 </button>
               ))}
             </div>
